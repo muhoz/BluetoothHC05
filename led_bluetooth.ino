@@ -12,8 +12,6 @@ void setup() {
 }
 
 
-
-//-----------------------------------------------------------------------//  
 void loop() {
   while (BT.available()){            //Listen to incoming data in the port
   delay(100);                        //delay
