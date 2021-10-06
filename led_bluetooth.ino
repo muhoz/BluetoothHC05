@@ -1,40 +1,37 @@
+//include the SoftwareSerial to create a communication port(TX-RX) with the Arduino
 #include <SoftwareSerial.h>
 
 
-SoftwareSerial BT(3,2); //TX, RX respetively
-String state;// string to store incoming message from bluetooth
+SoftwareSerial BT(3,2);     //create the BT object with the two pins (Tx and Rx) in parameters
+String message;             //Store incoming message from bluetooth
 
 
 void setup() {
- BT.begin(9600);// bluetooth serial communication will happen on pin 10 and 11
- Serial.begin(9600); // serial communication to check the data on serial monitor
-  pinMode(8, OUTPUT); // LED connected to 13th pin
-
-
-
-
+ BT.begin(9600);            // initialize the bluetooth-Arduino communication
+ Serial.begin(9600);        // initialize the Arduino-USB port communication
 }
+
+
+
 //-----------------------------------------------------------------------//  
 void loop() {
-  while (BT.available()){  //Check if there is an available byte to read
-  delay(10); //Delay added to make thing stable 
-  char c = BT.read(); //Conduct a serial read
-  state += c; //build the string- either "On" or "off"
+  while (BT.available()){            //Listen to incoming data in the port
+  delay(100);                        //delay
+  char c = BT.read();                //retrieve the char
+  state += c;                        //construct the message, char after char
   }  
-  if (state.length() > 0) {
+  if (state.length() > 0) {          //if there's a message!=null, we print it out
     Serial.println(state); 
 
-
-  if(state == "on") 
+  if(state == "on")                  //Compare the state with predefined messages
   {
-    digitalWrite(8, HIGH);
-    
+    //add an action to execute
       } 
   
   else if(state == "off") 
   {
-    digitalWrite(8, LOW);
+    //add an action to execute
      }
-  
-  
-state ="";}} //Reset the variable
+state ="";                           //affect the state to zero
+  }
+} //Reset the variable
